@@ -1,0 +1,101 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Question 1";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Lab_2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Lab_2.styles.css" asp-append-version="true" />
+
+    <style>
+        body {
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+            padding: 20px;
+            justify-content: center;
+            align-content: center;
+        }
+
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Reverse Name and Calculate Age</h1>
+
+    <label for="fullName">Enter your full name:</label>
+    <input type="text" id="fullName" placeholder="Full name">
+
+    <label for="birthYear">Enter your birth year:</label>
+    <input type="number" id="birthYear" placeholder="Birth year" min="1000" max="2024">
+
+    <button onclick="displayResult()">Submit</button>
+
+    <p id="result"></p>
+
+    <script>
+
+        //reverse name
+        function reverseName(name) {
+            return name.split('').reverse().join('');
+        }
+
+        //calculate age
+        function calculateAge(birthYear) {
+            const currentYear = new Date().getFullYear();
+            // birth year is between 1000 and 2024 (present year) only
+            if (birthYear > currentYear || birthYear < 1000) {
+                return null;  // invalid birth year
+            }
+            return currentYear - birthYear;
+        }
+
+        function displayResult() {
+            //user input
+            const fullName = document.getElementById("fullName").value.trim();
+            const birthYear = parseInt(document.getElementById("birthYear").value);
+
+            //should have first name and last name
+            if (!fullName || fullName.length === 0 || fullName.replace(/\s/g, '').length === 0 || fullName.split(' ').length < 2) {
+                document.getElementById("result").textContent = "Please enter a full name with at least a first and last name.";
+                return;
+            }
+
+
+            //birth year should be a number and not later than 1000
+            if (isNaN(birthYear) || birthYear > new Date().getFullYear() || birthYear < 1000) {
+                document.getElementById("result").textContent = "Please enter a valid birth year between 1900 and the current year.";
+                return;
+            }
+
+            //reversing the name
+            const reversedName = reverseName(fullName);
+            const age = calculateAge(birthYear);
+
+            //age should not be null
+            if (age === null) {
+                document.getElementById("result").textContent = "Invalid birth year.";
+            } else {
+                //displaying of the result
+                document.getElementById("result").textContent =
+                    `Your name is ${fullName} and its reversed version is ${reversedName}. Your age is ${age} years old.`;
+            }
+        }
+    </script>
+</body>
+</html>
+
+
