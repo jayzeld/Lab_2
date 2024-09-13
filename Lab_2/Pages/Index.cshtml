@@ -8,43 +8,84 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Lab_2</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Lab_2.styles.css" asp-append-version="true" />
-
     <style>
         body {
-            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
-            padding: 20px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            height: 100vh;
+            display: flex;
             justify-content: center;
-            align-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: lightblue;
+            
+        }
+
+        .content-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         label, input {
             display: block;
             margin-bottom: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        input {
+            max-width: 250px; 
+            border-radius: 15px;
+            background-color: #f0f0f0;
         }
 
         #result {
             margin-top: 20px;
             font-weight: bold;
+            padding: 10px;
+            border: 2px solid black;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            width: fit-content;
+            max-width: 100%;
+            word-wrap: break-word;
+            display: none;
         }
+
+        button {
+            color: blue;
+            border-radius: 15px;
+            padding: 10px 20px;
+            background-color: darkgray;
+            border: none;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: lightgray;
+                color: white;
+            }
     </style>
 </head>
 <body>
 
-    <h1>Reverse Name and Calculate Age</h1>
+    <div class="content-container">
+        <h1>REVERSE NAME AND CALCULATE AGE</h1>
 
-    <label for="fullName">Enter your full name:</label>
-    <input type="text" id="fullName" placeholder="Full name">
+        <label for="fullName">Enter your full name:</label>
+        <input type="text" id="fullName" placeholder="Full name">
 
-    <label for="birthYear">Enter your birth year:</label>
-    <input type="number" id="birthYear" placeholder="Birth year" min="1000" max="2024">
+        <label for="birthYear">Enter your birth year:</label>
+        <input type="number" id="birthYear" placeholder="Birth year" min="1000" max="2024">
 
-    <button onclick="displayResult()">Submit</button>
+        <button onclick="displayResult()">Submit</button>
 
-    <p id="result"></p>
+        <p id="result"></p>
+    </div>
 
     <script>
 
@@ -77,7 +118,7 @@
 
             //birth year should be a number and not later than 1000
             if (isNaN(birthYear) || birthYear > new Date().getFullYear() || birthYear < 1000) {
-                document.getElementById("result").textContent = "Please enter a valid birth year between 1900 and the current year.";
+                document.getElementById("result").textContent = "Please enter a valid birth year between 1000 and the current year.";
                 return;
             }
 
@@ -89,10 +130,17 @@
             if (age === null) {
                 document.getElementById("result").textContent = "Invalid birth year.";
             } else {
-                //displaying of the result
-                document.getElementById("result").textContent =
-                    `Your name is ${fullName} and its reversed version is ${reversedName}. Your age is ${age} years old.`;
+                //displaying the result
+                document.getElementById("result").innerHTML =
+                    `Name: ${fullName} <br>
+                Age: ${age} <br>
+                Result: Your name is ${fullName} and its reversed version is ${reversedName}. Your age is ${age} years old.`;
             }
+
+
+            document.getElementById("result").style.display = 'block';
+
+
         }
     </script>
 </body>
